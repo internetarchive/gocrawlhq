@@ -13,7 +13,9 @@ var (
 	Version = "1.0.0"
 )
 
-func Init(key, secret, project, HQAddress string) (c Client, err error) {
+func Init(key, secret, project, HQAddress string) (c *Client, err error) {
+	c = new(Client)
+
 	c.Key = key
 	c.Secret = secret
 	c.Project = project
