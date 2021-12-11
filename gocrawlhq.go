@@ -7,9 +7,9 @@ import (
 )
 
 var (
-	discoveredEndpoint *url.URL
-	finishedEndpoint   *url.URL
-	feedEndpoint       *url.URL
+	DiscoveredEndpoint *url.URL
+	FinishedEndpoint   *url.URL
+	FeedEndpoint       *url.URL
 
 	Version = "1.0.0"
 )
@@ -23,24 +23,24 @@ func Init(key, secret, project, HQAddress string) (c *Client, err error) {
 	c.HTTPClient = http.DefaultClient
 	c.HQAddress = HQAddress
 
-	discoveredEndpoint, err := url.Parse(c.HQAddress)
+	DiscoveredEndpoint, err = url.Parse(c.HQAddress)
 	if err != nil {
 		return c, err
 	}
 
-	finishedEndpoint, err := url.Parse(c.HQAddress)
+	FinishedEndpoint, err = url.Parse(c.HQAddress)
 	if err != nil {
 		return c, err
 	}
 
-	feedEndpoint, err := url.Parse(c.HQAddress)
+	FeedEndpoint, err = url.Parse(c.HQAddress)
 	if err != nil {
 		return c, err
 	}
 
-	discoveredEndpoint.Path = path.Join(discoveredEndpoint.Path, "discovered")
-	finishedEndpoint.Path = path.Join(finishedEndpoint.Path, "finished")
-	feedEndpoint.Path = path.Join(feedEndpoint.Path, "feed")
+	DiscoveredEndpoint.Path = path.Join(DiscoveredEndpoint.Path, "discovered")
+	FinishedEndpoint.Path = path.Join(FinishedEndpoint.Path, "finished")
+	FeedEndpoint.Path = path.Join(FeedEndpoint.Path, "feed")
 
 	return c, nil
 }
