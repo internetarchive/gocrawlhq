@@ -2,13 +2,14 @@ package gocrawlhq
 
 import (
 	"net/http"
+	"net/url"
 	"path"
 )
 
 var (
-	discoveredEndpoint string
-	finishedEndpoint   string
-	feedEndpoint       string
+	discoveredEndpoint *url.URL
+	finishedEndpoint   *url.URL
+	feedEndpoint       *url.URL
 
 	Version = "1.0.0"
 )
@@ -22,9 +23,24 @@ func Init(key, secret, project, HQAddress string) (c *Client, err error) {
 	c.HTTPClient = http.DefaultClient
 	c.HQAddress = HQAddress
 
-	discoveredEndpoint = path.Join(c.HQAddress + "discovered")
-	finishedEndpoint = path.Join(c.HQAddress + "finished")
-	feedEndpoint = path.Join(c.HQAddress + "feed")
+	discoveredEndpoint, err := url.Parse(c.HQAddress)
+	if err != nil {
+		return c, err
+	}
+
+	finishedEndpoint, err := url.Parse(c.HQAddress)
+	if err != nil {
+		return c, err
+	}
+
+	feedEndpoint, err := url.Parse(c.HQAddress)
+	if err != nil {
+		return c, err
+	}
+
+	discoveredEndpoint.Path = path.Join(discoveredEndpoint.Path, "discovered")
+	finishedEndpoint.Path = path.Join(finishedEndpoint.Path, "finished")
+	feedEndpoint.Path = path.Join(feedEndpoint.Path, "feed")
 
 	return c, nil
 }

@@ -23,7 +23,7 @@ func (c *Client) Finished(URLs []URL, URLType string) (finishedResponse *Finishe
 	}
 
 	// build request
-	req, err := http.NewRequest("POST", finishedEndpoint, bytes.NewReader(jsonPayload))
+	req, err := http.NewRequest("POST", finishedEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return finishedResponse, err
 	}

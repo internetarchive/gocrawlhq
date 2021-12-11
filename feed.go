@@ -11,7 +11,7 @@ func (c *Client) Feed(size int) (feedResponse *FeedResponse, err error) {
 	feedResponse = new(FeedResponse)
 
 	// build request
-	req, err := http.NewRequest("GET", feedEndpoint, nil)
+	req, err := http.NewRequest("GET", feedEndpoint.String(), nil)
 	if err != nil {
 		return feedResponse, err
 	}

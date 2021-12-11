@@ -24,7 +24,7 @@ func (c *Client) Discovered(URLs []string, URLType string) (discoveredResponse *
 	}
 
 	// build request
-	req, err := http.NewRequest("POST", discoveredEndpoint, bytes.NewReader(jsonPayload))
+	req, err := http.NewRequest("POST", discoveredEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return discoveredResponse, err
 	}
