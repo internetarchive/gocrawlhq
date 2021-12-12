@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 )
 
 func (c *Client) Feed(size int) (feedResponse *FeedResponse, err error) {
@@ -15,6 +16,10 @@ func (c *Client) Feed(size int) (feedResponse *FeedResponse, err error) {
 	if err != nil {
 		return feedResponse, err
 	}
+
+	q := req.URL.Query()
+	q.Add("size", strconv.Itoa(size))
+	req.URL.RawQuery = q.Encode()
 
 	req.Header.Add("X-Auth-Key", c.Key)
 	req.Header.Add("X-Auth-Secret", c.Secret)

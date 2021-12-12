@@ -40,7 +40,7 @@ func Init(key, secret, project, HQAddress string) (c *Client, err error) {
 
 	DiscoveredEndpoint.Path = path.Join(DiscoveredEndpoint.Path, "discovered")
 	FinishedEndpoint.Path = path.Join(FinishedEndpoint.Path, "finished")
-	FeedEndpoint.Path = path.Join(FeedEndpoint.Path, "feed")
+	FeedEndpoint.Path = path.Join(FeedEndpoint.Path, "feed", c.Project)
 
 	return c, nil
 }
