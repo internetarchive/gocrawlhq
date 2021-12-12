@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func (c *Client) Finished(URLs []URL, URLType string) (finishedResponse *FinishedResponse, err error) {
+func (c *Client) Finished(URLs []URL) (finishedResponse *FinishedResponse, err error) {
 	expectedStatusCode := 200
 	finishedResponse = new(FinishedResponse)
 
