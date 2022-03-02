@@ -12,10 +12,15 @@ func (c *Client) Discovered(URLs []string, URLType string) (discoveredResponse *
 	discoveredResponse = new(DiscoveredResponse)
 
 	// build payload
+	var URLsPayload []URL
+	for _, URLString := range URLs {
+		URLsPayload = append(URLsPayload, URL{Value: URLString})
+	}
+
 	payload := DiscoveredPayload{
 		Project: c.Project,
 		Type:    URLType,
-		URLs:    URLs,
+		URLs:    URLsPayload,
 	}
 
 	jsonPayload, err := json.Marshal(payload)

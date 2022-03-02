@@ -11,8 +11,10 @@ type Client struct {
 }
 
 type URL struct {
-	ID    int    `json:"id"`
+	ID    int    `json:"id,omitempty"`
 	Value string `json:"value"`
+	Path  string `json:"path,omitempty"`
+	Via   string `json:"via,omitempty"`
 }
 
 type FeedResponse struct {
@@ -29,9 +31,9 @@ type FinishedResponse struct {
 }
 
 type DiscoveredPayload struct {
-	Project string   `json:"project"`
-	Type    string   `json:"type"`
-	URLs    []string `json:"urls"`
+	Project string `json:"project"`
+	Type    string `json:"type"`
+	URLs    []URL  `json:"urls"`
 }
 
 type FinishedPayload struct {
