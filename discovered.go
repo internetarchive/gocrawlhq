@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func (c *Client) Discovered(URLs []string, URLType string) (discoveredResponse *DiscoveredResponse, err error) {
+func (c *Client) Discovered(URLs []string, URLType string, bypassSeencheck bool) (discoveredResponse *DiscoveredResponse, err error) {
 	expectedStatusCode := 201
 	discoveredResponse = new(DiscoveredResponse)
 
@@ -18,9 +18,10 @@ func (c *Client) Discovered(URLs []string, URLType string) (discoveredResponse *
 	}
 
 	payload := DiscoveredPayload{
-		Project: c.Project,
-		Type:    URLType,
-		URLs:    URLsPayload,
+		Project:         c.Project,
+		BypassSeencheck: bypassSeencheck,
+		Type:            URLType,
+		URLs:            URLsPayload,
 	}
 
 	jsonPayload, err := json.Marshal(payload)

@@ -31,9 +31,10 @@ type FinishedResponse struct {
 }
 
 type DiscoveredPayload struct {
-	Project string `json:"project"`
-	Type    string `json:"type"`
-	URLs    []URL  `json:"urls"`
+	Project         string `json:"project"`
+	Type            string `json:"type"`
+	URLs            []URL  `json:"urls"`
+	BypassSeencheck bool   `json:"bypassSeencheck"`
 }
 
 type FinishedPayload struct {
