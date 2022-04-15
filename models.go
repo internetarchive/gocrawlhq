@@ -13,7 +13,7 @@ type Client struct {
 type URL struct {
 	ID    string `json:"id,omitempty"`
 	Value string `json:"value"`
-	Path  string `json:"path,omitempty"`
+	Path  string `json:"path"`
 	Via   string `json:"via,omitempty"`
 }
 
