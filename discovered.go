@@ -7,15 +7,14 @@ import (
 	"net/http"
 )
 
-func (c *Client) Discovered(URLs []string, URLType string, bypassSeencheck bool) (discoveredResponse *DiscoveredResponse, err error) {
+func (c *Client) Discovered(URLs []URL, URLType string, bypassSeencheck bool) (discoveredResponse *DiscoveredResponse, err error) {
 	expectedStatusCode := 201
 	discoveredResponse = new(DiscoveredResponse)
 
 	// build payload
 	var URLsPayload []URL
-	for _, URLString := range URLs {
-		URLsPayload = append(URLsPayload, URL{Value: URLString})
-	}
+
+	URLsPayload = append(URLsPayload, URLs...)
 
 	payload := DiscoveredPayload{
 		Project:         c.Project,
