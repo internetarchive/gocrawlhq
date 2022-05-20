@@ -7,6 +7,7 @@ type Client struct {
 	Secret     string
 	Project    string
 	HQAddress  string
+	Identifier string
 	HTTPClient *http.Client
 }
 

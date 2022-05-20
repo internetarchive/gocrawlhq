@@ -3,6 +3,7 @@ package gocrawlhq
 import (
 	"net/http"
 	"net/url"
+	"os"
 	"path"
 )
 
@@ -11,7 +12,7 @@ var (
 	FinishedEndpoint   *url.URL
 	FeedEndpoint       *url.URL
 
-	Version = "1.1.3"
+	Version = "1.1.4"
 )
 
 func Init(key, secret, project, HQAddress string) (c *Client, err error) {
@@ -22,6 +23,13 @@ func Init(key, secret, project, HQAddress string) (c *Client, err error) {
 	c.Project = project
 	c.HTTPClient = http.DefaultClient
 	c.HQAddress = HQAddress
+
+	hostname, err := os.Hostname()
+	if err != nil {
+		return c, err
+	}
+
+	c.Identifier = hostname + "-" + project
 
 	DiscoveredEndpoint, err = url.Parse(c.HQAddress)
 	if err != nil {
