@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func (c *Client) Feed(size int) (feedResponse *FeedResponse, err error) {
+func (c *Client) Feed(size int, strategy string) (feedResponse *FeedResponse, err error) {
 	expectedStatusCode := 200
 	emptyStatusCode := 204
 	feedResponse = new(FeedResponse)
@@ -21,6 +21,7 @@ func (c *Client) Feed(size int) (feedResponse *FeedResponse, err error) {
 
 	q := req.URL.Query()
 	q.Add("size", strconv.Itoa(size))
+	q.Add("strategy", strategy)
 	req.URL.RawQuery = q.Encode()
 
 	req.Header.Add("X-Auth-Key", c.Key)
