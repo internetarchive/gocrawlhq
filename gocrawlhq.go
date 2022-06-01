@@ -12,7 +12,7 @@ var (
 	FinishedEndpoint   *url.URL
 	FeedEndpoint       *url.URL
 
-	Version = "1.1.4"
+	Version = "1.1.8"
 )
 
 func Init(key, secret, project, HQAddress string) (c *Client, err error) {

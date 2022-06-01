@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func (c *Client) Discovered(URLs []URL, URLType string, bypassSeencheck bool) (discoveredResponse *DiscoveredResponse, err error) {
+func (c *Client) Discovered(URLs []URL, URLType string, bypassSeencheck bool, seencheckOnly bool) (discoveredResponse *DiscoveredResponse, err error) {
 	expectedStatusCode := 201
 	discoveredResponse = new(DiscoveredResponse)
 
@@ -19,6 +19,7 @@ func (c *Client) Discovered(URLs []URL, URLType string, bypassSeencheck bool) (d
 	payload := DiscoveredPayload{
 		Project:         c.Project,
 		BypassSeencheck: bypassSeencheck,
+		SeencheckOnly:   seencheckOnly,
 		Type:            URLType,
 		URLs:            URLsPayload,
 	}
