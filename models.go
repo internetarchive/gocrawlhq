@@ -41,6 +41,7 @@ type DiscoveredPayload struct {
 }
 
 type FinishedPayload struct {
-	Project string `json:"project"`
-	URLs    []URL  `json:"urls"`
+	Project     string `json:"project"`
+	LocalCrawls int    `json:"localCrawls"`
+	URLs        []URL  `json:"urls"`
 }
