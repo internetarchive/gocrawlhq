@@ -7,14 +7,15 @@ import (
 	"net/http"
 )
 
-func (c *Client) Finished(URLs []URL) (finishedResponse *FinishedResponse, err error) {
+func (c *Client) Finished(URLs []URL, localCrawls int) (finishedResponse *FinishedResponse, err error) {
 	expectedStatusCode := 200
 	finishedResponse = new(FinishedResponse)
 
 	// build payload
 	payload := FinishedPayload{
-		Project: c.Project,
-		URLs:    URLs,
+		Project:     c.Project,
+		LocalCrawls: localCrawls,
+		URLs:        URLs,
 	}
 
 	jsonPayload, err := json.Marshal(payload)
