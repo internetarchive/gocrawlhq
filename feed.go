@@ -26,12 +26,11 @@ func (c *Client) Feed(size int, strategy string) (feedResponse *FeedResponse, er
 
 	req.Header.Add("X-Auth-Key", c.Key)
 	req.Header.Add("X-Auth-Secret", c.Secret)
+	req.Header.Add("User-Agent", "gocrawlhq/"+Version)
 
 	if c.Identifier != "" {
 		req.Header.Add("X-Identifier", c.Identifier)
 	}
-
-	req.Header.Add("User-Agent", "gocrawlhq/"+Version)
 
 	// execute request
 	resp, err := c.HTTPClient.Do(req)

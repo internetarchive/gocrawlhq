@@ -33,6 +33,10 @@ func (c *Client) Finished(URLs []URL, localCrawls int) (finishedResponse *Finish
 	req.Header.Add("X-Auth-Secret", c.Secret)
 	req.Header.Add("User-Agent", "gocrawlhq/"+Version)
 
+	if c.Identifier != "" {
+		req.Header.Add("X-Identifier", c.Identifier)
+	}
+
 	// execute request
 	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
