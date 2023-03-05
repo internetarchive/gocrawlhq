@@ -19,7 +19,8 @@ type URL struct {
 }
 
 type FeedResponse struct {
-	URLs []URL `json:"urls"`
+	Project string `json:"project"`
+	URLs    []URL  `json:"urls"`
 }
 
 type DiscoveredResponse struct {
@@ -33,7 +34,6 @@ type FinishedResponse struct {
 }
 
 type DiscoveredPayload struct {
-	Project         string `json:"project"`
 	Type            string `json:"type"`
 	URLs            []URL  `json:"urls"`
 	BypassSeencheck bool   `json:"bypassSeencheck"`
@@ -41,7 +41,6 @@ type DiscoveredPayload struct {
 }
 
 type FinishedPayload struct {
-	Project     string `json:"project"`
-	LocalCrawls int    `json:"localCrawls"`
-	URLs        []URL  `json:"urls"`
+	LocalCrawls int   `json:"localCrawls"`
+	URLs        []URL `json:"urls"`
 }

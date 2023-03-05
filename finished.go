@@ -13,7 +13,6 @@ func (c *Client) Finished(URLs []URL, localCrawls int) (finishedResponse *Finish
 
 	// build payload
 	payload := FinishedPayload{
-		Project:     c.Project,
 		LocalCrawls: localCrawls,
 		URLs:        URLs,
 	}

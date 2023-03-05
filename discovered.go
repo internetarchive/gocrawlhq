@@ -17,7 +17,6 @@ func (c *Client) Discovered(URLs []URL, URLType string, bypassSeencheck bool, se
 	URLsPayload = append(URLsPayload, URLs...)
 
 	payload := DiscoveredPayload{
-		Project:         c.Project,
 		BypassSeencheck: bypassSeencheck,
 		SeencheckOnly:   seencheckOnly,
 		Type:            URLType,

@@ -46,9 +46,9 @@ func Init(key, secret, project, HQAddress string) (c *Client, err error) {
 		return c, err
 	}
 
-	DiscoveredEndpoint.Path = path.Join(DiscoveredEndpoint.Path, "api", "discovered")
-	FinishedEndpoint.Path = path.Join(FinishedEndpoint.Path, "api", "finished")
-	FeedEndpoint.Path = path.Join(FeedEndpoint.Path, "api", "feed", c.Project)
+	DiscoveredEndpoint.Path = path.Join(DiscoveredEndpoint.Path, "api", "project", c.Project, "discovered")
+	FinishedEndpoint.Path = path.Join(FinishedEndpoint.Path, "api", "project", c.Project, "finished")
+	FeedEndpoint.Path = path.Join(FeedEndpoint.Path, "api", "project", c.Project, "feed")
 
 	return c, nil
 }
