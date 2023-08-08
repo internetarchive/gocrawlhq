@@ -1,14 +1,18 @@
 package gocrawlhq
 
-import "net/http"
+import (
+	"net"
+	"net/http"
+)
 
 type Client struct {
-	Key        string
-	Secret     string
-	Project    string
-	HQAddress  string
-	Identifier string
-	HTTPClient *http.Client
+	Key           string
+	Secret        string
+	Project       string
+	HQAddress     string
+	Identifier    string
+	HTTPClient    *http.Client
+	WebsocketConn *net.Conn
 }
 
 type URL struct {
