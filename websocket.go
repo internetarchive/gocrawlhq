@@ -18,7 +18,7 @@ type IdentifyMessage struct {
 	IP         string `json:"ip"`
 	Hostname   string `json:"hostname"`
 	Identifier string `json:"identifier"`
-	Timestamp  string `json:"timestamp"`
+	Timestamp  int64  `json:"timestamp"`
 	GoVersion  string `json:"goVersion"`
 }
 
@@ -53,7 +53,7 @@ func (c *Client) initWebsocketConn() (err error) {
 
 func (c *Client) Identify(msg *IdentifyMessage) (err error) {
 	msg.Identifier = c.Identifier
-	msg.Timestamp = time.Now().UTC().Format(time.RFC3339)
+	msg.Timestamp = time.Now().UTC().Unix()
 
 	marshalled, err := json.Marshal(msg)
 	if err != nil {

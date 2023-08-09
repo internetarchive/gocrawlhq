@@ -18,25 +18,24 @@ var (
 func Init(key, secret, project, HQAddress string) (c *Client, err error) {
 	c = new(Client)
 
-	c.Key = key
-	c.Secret = secret
-	c.Project = project
-	c.HTTPClient = http.DefaultClient
-	c.HQAddress = HQAddress
-
-	// Initialize the websocket connection
-	err = c.initWebsocketConn()
-	if err != nil {
-		return c, err
-	}
-
 	// Initialize the identifier
 	hostname, err := os.Hostname()
 	if err != nil {
 		return c, err
 	}
 
+	c.Key = key
+	c.Secret = secret
+	c.Project = project
+	c.HTTPClient = http.DefaultClient
+	c.HQAddress = HQAddress
 	c.Identifier = hostname + "-" + project
+
+	// Initialize the websocket connection
+	err = c.initWebsocketConn()
+	if err != nil {
+		return c, err
+	}
 
 	// Initialize the endpoints
 	DiscoveredEndpoint, err = url.Parse(c.HQAddress)
