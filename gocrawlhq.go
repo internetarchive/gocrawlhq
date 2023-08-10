@@ -32,7 +32,7 @@ func Init(key, secret, project, HQAddress string) (c *Client, err error) {
 	c.Identifier = hostname + "-" + project
 
 	// Initialize the websocket connection
-	err = c.initWebsocketConn()
+	err = c.InitWebsocketConn()
 	if err != nil {
 		return c, err
 	}

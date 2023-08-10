@@ -22,7 +22,7 @@ type IdentifyMessage struct {
 	GoVersion  string `json:"goVersion"`
 }
 
-func (c *Client) initWebsocketConn() (err error) {
+func (c *Client) InitWebsocketConn() (err error) {
 	// Remove http or https from the HQAddress
 	HQAddress := strings.ReplaceAll(c.HQAddress, "http://", "")
 	HQAddress = strings.ReplaceAll(HQAddress, "https://", "")
