@@ -8,11 +8,7 @@ import (
 )
 
 var (
-	DiscoveredEndpoint *url.URL
-	FinishedEndpoint   *url.URL
-	FeedEndpoint       *url.URL
-
-	Version = "1.1.8"
+	Version = "1.2.5"
 )
 
 func Init(key, secret, project, HQAddress string) (c *Client, err error) {
@@ -38,24 +34,24 @@ func Init(key, secret, project, HQAddress string) (c *Client, err error) {
 	}
 
 	// Initialize the endpoints
-	DiscoveredEndpoint, err = url.Parse(c.HQAddress)
+	c.DiscoveredEndpoint, err = url.Parse(c.HQAddress)
 	if err != nil {
 		return c, err
 	}
 
-	FinishedEndpoint, err = url.Parse(c.HQAddress)
+	c.FinishedEndpoint, err = url.Parse(c.HQAddress)
 	if err != nil {
 		return c, err
 	}
 
-	FeedEndpoint, err = url.Parse(c.HQAddress)
+	c.FeedEndpoint, err = url.Parse(c.HQAddress)
 	if err != nil {
 		return c, err
 	}
 
-	DiscoveredEndpoint.Path = path.Join(DiscoveredEndpoint.Path, "api", "project", c.Project, "discovered")
-	FinishedEndpoint.Path = path.Join(FinishedEndpoint.Path, "api", "project", c.Project, "finished")
-	FeedEndpoint.Path = path.Join(FeedEndpoint.Path, "api", "project", c.Project, "feed")
+	c.DiscoveredEndpoint.Path = path.Join(c.DiscoveredEndpoint.Path, "api", "project", c.Project, "discovered")
+	c.FinishedEndpoint.Path = path.Join(c.FinishedEndpoint.Path, "api", "project", c.Project, "finished")
+	c.FeedEndpoint.Path = path.Join(c.FeedEndpoint.Path, "api", "project", c.Project, "feed")
 
 	return c, nil
 }

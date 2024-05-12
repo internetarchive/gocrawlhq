@@ -23,7 +23,7 @@ func (c *Client) Finished(URLs []URL, localCrawls int) (finishedResponse *Finish
 	}
 
 	// build request
-	req, err := http.NewRequest("POST", FinishedEndpoint.String(), bytes.NewReader(jsonPayload))
+	req, err := http.NewRequest("POST", c.FinishedEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return finishedResponse, err
 	}

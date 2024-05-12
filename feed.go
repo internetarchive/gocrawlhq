@@ -14,7 +14,7 @@ func (c *Client) Feed(size int, strategy string) (feedResponse *FeedResponse, er
 	feedResponse = new(FeedResponse)
 
 	// build request
-	req, err := http.NewRequest("GET", FeedEndpoint.String(), nil)
+	req, err := http.NewRequest("GET", c.FeedEndpoint.String(), nil)
 	if err != nil {
 		return feedResponse, err
 	}

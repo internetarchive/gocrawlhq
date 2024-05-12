@@ -29,7 +29,7 @@ func (c *Client) Discovered(URLs []URL, URLType string, bypassSeencheck bool, se
 	}
 
 	// build request
-	req, err := http.NewRequest("POST", DiscoveredEndpoint.String(), bytes.NewReader(jsonPayload))
+	req, err := http.NewRequest("POST", c.DiscoveredEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return discoveredResponse, err
 	}

@@ -3,16 +3,20 @@ package gocrawlhq
 import (
 	"net"
 	"net/http"
+	"net/url"
 )
 
 type Client struct {
-	Key           string
-	Secret        string
-	Project       string
-	HQAddress     string
-	Identifier    string
-	HTTPClient    *http.Client
-	WebsocketConn *net.Conn
+	Key                string
+	Secret             string
+	Project            string
+	HQAddress          string
+	Identifier         string
+	DiscoveredEndpoint *url.URL
+	FinishedEndpoint   *url.URL
+	FeedEndpoint       *url.URL
+	HTTPClient         *http.Client
+	WebsocketConn      *net.Conn
 }
 
 type URL struct {
