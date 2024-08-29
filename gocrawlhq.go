@@ -5,10 +5,11 @@ import (
 	"net/url"
 	"os"
 	"path"
+	"time"
 )
 
 var (
-	Version = "1.2.5"
+	Version = "1.2.6"
 )
 
 func Init(key, secret, project, HQAddress string) (c *Client, err error) {
@@ -23,7 +24,11 @@ func Init(key, secret, project, HQAddress string) (c *Client, err error) {
 	c.Key = key
 	c.Secret = secret
 	c.Project = project
-	c.HTTPClient = http.DefaultClient
+
+	c.HTTPClient = &http.Client{
+		Timeout: time.Second * 5,
+	}
+
 	c.HQAddress = HQAddress
 	c.Identifier = hostname + "-" + project
 
