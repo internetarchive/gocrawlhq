@@ -9,28 +9,31 @@ import (
 )
 
 var (
-	Version = "1.2.6"
+	Version = "1.2.9"
 )
 
-func Init(key, secret, project, HQAddress string) (c *Client, err error) {
+func Init(key, secret, project, address, identifier string) (c *Client, err error) {
 	c = new(Client)
-
-	// Initialize the identifier
-	hostname, err := os.Hostname()
-	if err != nil {
-		return c, err
-	}
 
 	c.Key = key
 	c.Secret = secret
 	c.Project = project
-
+	c.HQAddress = address
 	c.HTTPClient = &http.Client{
 		Timeout: time.Second * 5,
 	}
 
-	c.HQAddress = HQAddress
-	c.Identifier = hostname + "-" + project
+	if identifier == "" {
+		// Initialize the identifier
+		hostname, err := os.Hostname()
+		if err != nil {
+			return c, err
+		}
+
+		c.Identifier = hostname + "-" + project
+	} else {
+		c.Identifier = identifier
+	}
 
 	// Initialize the websocket connection
 	err = c.InitWebsocketConn()
