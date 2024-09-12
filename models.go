@@ -15,6 +15,7 @@ type Client struct {
 	DiscoveredEndpoint *url.URL
 	FinishedEndpoint   *url.URL
 	FeedEndpoint       *url.URL
+	ResetEndpoint      *url.URL
 	HTTPClient         *http.Client
 	WebsocketConn      *net.Conn
 }

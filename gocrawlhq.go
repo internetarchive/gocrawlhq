@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	Version = "1.2.11"
+	Version = "1.2.12"
 )
 
 func Init(key, secret, project, address, identifier string) (c *Client, err error) {
@@ -57,9 +57,15 @@ func Init(key, secret, project, address, identifier string) (c *Client, err erro
 		return c, err
 	}
 
+	c.ResetEndpoint, err = url.Parse(c.HQAddress)
+	if err != nil {
+		return c, err
+	}
+
 	c.DiscoveredEndpoint.Path = path.Join(c.DiscoveredEndpoint.Path, "api", "project", c.Project, "discovered")
 	c.FinishedEndpoint.Path = path.Join(c.FinishedEndpoint.Path, "api", "project", c.Project, "finished")
 	c.FeedEndpoint.Path = path.Join(c.FeedEndpoint.Path, "api", "project", c.Project, "feed")
+	c.ResetEndpoint.Path = path.Join(c.ResetEndpoint.Path, "api", "project", c.Project, "reset")
 
 	return c, nil
 }
