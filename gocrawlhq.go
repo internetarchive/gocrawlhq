@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	Version = "1.2.9"
+	Version = "1.2.11"
 )
 
 func Init(key, secret, project, address, identifier string) (c *Client, err error) {
