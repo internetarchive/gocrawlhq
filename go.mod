@@ -1,4 +1,4 @@
-module git.archive.org/wb/gocrawlhq
+module github.com/internetarchive/gocrawlhq
 
 go 1.22
 
