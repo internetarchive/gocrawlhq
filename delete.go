@@ -7,12 +7,12 @@ import (
 	"net/http"
 )
 
-func (c *Client) Delete(URLs []URL, localCrawls int) (finishedResponse *FinishedResponse, err error) {
+func (c *Client) Delete(URLs []URL, localCrawls int) (finishedResponse *DeleteResponse, err error) {
 	expectedStatusCode := 204
-	finishedResponse = new(FinishedResponse)
+	finishedResponse = new(DeleteResponse)
 
 	// build payload
-	payload := FinishedPayload{
+	payload := DeletePayload{
 		LocalCrawls: localCrawls,
 		URLs:        URLs,
 	}

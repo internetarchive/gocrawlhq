@@ -32,27 +32,21 @@ type URL struct {
 	Timestamp int64  `json:"timestamp" db:"timestamp"`
 }
 
-type FeedResponse struct {
+type GetResponse struct {
 	Project string `json:"project"`
 	URLs    []URL  `json:"urls"`
 }
 
-type DiscoveredResponse struct {
-	Project string `json:"project"`
-	Type    string `json:"type"`
-	URLs    []URL  `json:"urls,omitempty"`
-}
-
-type FinishedResponse struct {
+type DeleteResponse struct {
 	Project string `json:"project"`
 }
 
-type DiscoveredPayload struct {
+type AddPayload struct {
 	URLs            []URL `json:"urls"`
 	BypassSeencheck bool  `json:"bypassSeencheck"`
 }
 
-type FinishedPayload struct {
+type DeletePayload struct {
 	LocalCrawls int   `json:"localCrawls"`
 	URLs        []URL `json:"urls"`
 }
