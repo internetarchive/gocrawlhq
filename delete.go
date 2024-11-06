@@ -8,7 +8,7 @@ import (
 )
 
 func (c *Client) Delete(URLs []URL, localCrawls int) (finishedResponse *FinishedResponse, err error) {
-	expectedStatusCode := 200
+	expectedStatusCode := 204
 	finishedResponse = new(FinishedResponse)
 
 	// build payload
