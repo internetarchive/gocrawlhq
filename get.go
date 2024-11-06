@@ -49,7 +49,7 @@ func (c *Client) Feed(size int, strategy string) (URLs []URL, err error) {
 	}
 
 	// decode response body
-	err = json.NewDecoder(resp.Body).Decode(URLs)
+	err = json.NewDecoder(resp.Body).Decode(&URLs)
 	if err != nil {
 		return URLs, err
 	}
