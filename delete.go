@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func (c *Client) Finished(URLs []URL, localCrawls int) (finishedResponse *FinishedResponse, err error) {
+func (c *Client) Delete(URLs []URL, localCrawls int) (finishedResponse *FinishedResponse, err error) {
 	expectedStatusCode := 200
 	finishedResponse = new(FinishedResponse)
 
@@ -23,7 +23,7 @@ func (c *Client) Finished(URLs []URL, localCrawls int) (finishedResponse *Finish
 	}
 
 	// build request
-	req, err := http.NewRequest("POST", c.FinishedEndpoint.String(), bytes.NewReader(jsonPayload))
+	req, err := http.NewRequest("DELETE", c.URLsEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return finishedResponse, err
 	}

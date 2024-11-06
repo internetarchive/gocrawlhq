@@ -8,15 +8,14 @@ import (
 	"strconv"
 )
 
-func (c *Client) Feed(size int, strategy string) (feedResponse *FeedResponse, err error) {
+func (c *Client) Feed(size int, strategy string) (URLs []URL, err error) {
 	expectedStatusCode := 200
 	emptyStatusCode := 204
-	feedResponse = new(FeedResponse)
 
 	// build request
-	req, err := http.NewRequest("GET", c.FeedEndpoint.String(), nil)
+	req, err := http.NewRequest("GET", c.URLsEndpoint.String(), nil)
 	if err != nil {
-		return feedResponse, err
+		return URLs, err
 	}
 
 	q := req.URL.Query()
@@ -35,25 +34,25 @@ func (c *Client) Feed(size int, strategy string) (feedResponse *FeedResponse, er
 	// execute request
 	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return feedResponse, err
+		return URLs, err
 	}
 	defer resp.Body.Close()
 
 	// check response status code for 'empty' or 204
 	if resp.StatusCode == emptyStatusCode {
-		return feedResponse, errors.New("gocrawlhq: feed is empty")
+		return URLs, errors.New("gocrawlhq: feed is empty")
 	}
 
 	// check response status code for 200
 	if resp.StatusCode != expectedStatusCode {
-		return feedResponse, fmt.Errorf("non-%d status code: %d", expectedStatusCode, resp.StatusCode)
+		return URLs, fmt.Errorf("non-%d status code: %d", expectedStatusCode, resp.StatusCode)
 	}
 
 	// decode response body
-	err = json.NewDecoder(resp.Body).Decode(feedResponse)
+	err = json.NewDecoder(resp.Body).Decode(URLs)
 	if err != nil {
-		return feedResponse, err
+		return URLs, err
 	}
 
-	return feedResponse, err
+	return URLs, err
 }

@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func (c *Client) Discovered(URLs []URL, URLType string, bypassSeencheck bool, seencheckOnly bool) (discoveredResponse *DiscoveredResponse, err error) {
+func (c *Client) Add(URLs []URL, bypassSeencheck bool) (discoveredResponse *DiscoveredResponse, err error) {
 	expectedStatusCode := 201
 	discoveredResponse = new(DiscoveredResponse)
 
@@ -18,8 +18,6 @@ func (c *Client) Discovered(URLs []URL, URLType string, bypassSeencheck bool, se
 
 	payload := DiscoveredPayload{
 		BypassSeencheck: bypassSeencheck,
-		SeencheckOnly:   seencheckOnly,
-		Type:            URLType,
 		URLs:            URLsPayload,
 	}
 
@@ -29,7 +27,7 @@ func (c *Client) Discovered(URLs []URL, URLType string, bypassSeencheck bool, se
 	}
 
 	// build request
-	req, err := http.NewRequest("POST", c.DiscoveredEndpoint.String(), bytes.NewReader(jsonPayload))
+	req, err := http.NewRequest("POST", c.URLsEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return discoveredResponse, err
 	}
@@ -37,6 +35,10 @@ func (c *Client) Discovered(URLs []URL, URLType string, bypassSeencheck bool, se
 	req.Header.Add("X-Auth-Key", c.Key)
 	req.Header.Add("X-Auth-Secret", c.Secret)
 	req.Header.Add("User-Agent", "gocrawlhq/"+Version)
+
+	if c.Identifier != "" {
+		req.Header.Add("X-Identifier", c.Identifier)
+	}
 
 	// execute request
 	resp, err := c.HTTPClient.Do(req)

@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	Version = "1.2.13"
+	Version = "1.2.15"
 )
 
 func Init(key, secret, project, address, identifier string) (c *Client, err error) {
@@ -42,17 +42,12 @@ func Init(key, secret, project, address, identifier string) (c *Client, err erro
 	}
 
 	// Initialize the endpoints
-	c.DiscoveredEndpoint, err = url.Parse(c.HQAddress)
+	c.URLsEndpoint, err = url.Parse(c.HQAddress)
 	if err != nil {
 		return c, err
 	}
 
-	c.FinishedEndpoint, err = url.Parse(c.HQAddress)
-	if err != nil {
-		return c, err
-	}
-
-	c.FeedEndpoint, err = url.Parse(c.HQAddress)
+	c.SeencheckEndpoint, err = url.Parse(c.HQAddress)
 	if err != nil {
 		return c, err
 	}
@@ -62,10 +57,9 @@ func Init(key, secret, project, address, identifier string) (c *Client, err erro
 		return c, err
 	}
 
-	c.DiscoveredEndpoint.Path = path.Join(c.DiscoveredEndpoint.Path, "api", "project", c.Project, "discovered")
-	c.FinishedEndpoint.Path = path.Join(c.FinishedEndpoint.Path, "api", "project", c.Project, "finished")
-	c.FeedEndpoint.Path = path.Join(c.FeedEndpoint.Path, "api", "project", c.Project, "feed")
-	c.ResetEndpoint.Path = path.Join(c.ResetEndpoint.Path, "api", "project", c.Project, "reset")
+	c.URLsEndpoint.Path = path.Join(c.URLsEndpoint.Path, "api", "projects", c.Project, "urls")
+	c.SeencheckEndpoint.Path = path.Join(c.SeencheckEndpoint.Path, "api", "projects", c.Project, "seencheck")
+	c.ResetEndpoint.Path = path.Join(c.ResetEndpoint.Path, "api", "projects", c.Project, "reset")
 
 	return c, nil
 }
