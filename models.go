@@ -37,10 +37,6 @@ type GetResponse struct {
 	URLs    []URL  `json:"urls"`
 }
 
-type DeleteResponse struct {
-	Project string `json:"project"`
-}
-
 type AddPayload struct {
 	URLs            []URL `json:"urls"`
 	BypassSeencheck bool  `json:"bypassSeencheck"`

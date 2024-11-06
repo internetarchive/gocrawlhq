@@ -7,9 +7,8 @@ import (
 	"net/http"
 )
 
-func (c *Client) Delete(URLs []URL, localCrawls int) (finishedResponse *DeleteResponse, err error) {
+func (c *Client) Delete(URLs []URL, localCrawls int) (err error) {
 	expectedStatusCode := 204
-	finishedResponse = new(DeleteResponse)
 
 	// build payload
 	payload := DeletePayload{
@@ -19,13 +18,13 @@ func (c *Client) Delete(URLs []URL, localCrawls int) (finishedResponse *DeleteRe
 
 	jsonPayload, err := json.Marshal(payload)
 	if err != nil {
-		return finishedResponse, err
+		return err
 	}
 
 	// build request
 	req, err := http.NewRequest("DELETE", c.URLsEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
-		return finishedResponse, err
+		return err
 	}
 
 	req.Header.Add("X-Auth-Key", c.Key)
@@ -39,20 +38,14 @@ func (c *Client) Delete(URLs []URL, localCrawls int) (finishedResponse *DeleteRe
 	// execute request
 	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return finishedResponse, err
+		return err
 	}
 	defer resp.Body.Close()
 
 	// check response status code
 	if resp.StatusCode != expectedStatusCode {
-		return finishedResponse, fmt.Errorf("non-%d status code: %d", expectedStatusCode, resp.StatusCode)
+		return fmt.Errorf("non-%d status code: %d", expectedStatusCode, resp.StatusCode)
 	}
 
-	// decode response body
-	err = json.NewDecoder(resp.Body).Decode(finishedResponse)
-	if err != nil {
-		return finishedResponse, err
-	}
-
-	return finishedResponse, err
+	return err
 }
