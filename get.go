@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func (c *Client) Feed(size int, strategy string) (URLs []URL, err error) {
+func (c *Client) Get(size int, strategy string) (URLs []URL, err error) {
 	expectedStatusCode := 200
 	emptyStatusCode := 204
 
