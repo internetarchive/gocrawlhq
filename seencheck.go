@@ -37,7 +37,7 @@ func (c *Client) Seencheck(URLs []URL) (outputURLs []URL, err error) {
 		if err != nil {
 			return URLs, err
 		}
-	} else if resp.StatusCode != 200 {
+	} else if resp.StatusCode != 204 {
 		return URLs, errors.New("unexpected status code: " + resp.Status)
 	}
 
