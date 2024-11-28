@@ -3,12 +3,11 @@ package gocrawlhq
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"net/http"
 )
 
 func (c *Client) Seencheck(URLs []URL) (outputURLs []URL, err error) {
-	expectedStatusCodes := []int{200, 204}
-
 	jsonPayload, err := json.Marshal(URLs)
 	if err != nil {
 		return URLs, err
@@ -33,15 +32,13 @@ func (c *Client) Seencheck(URLs []URL) (outputURLs []URL, err error) {
 	}
 	defer resp.Body.Close()
 
-	err = json.NewDecoder(resp.Body).Decode(&outputURLs)
-	if err != nil {
-		return URLs, err
-	}
-
-	for _, expectedStatusCode := range expectedStatusCodes {
-		if resp.StatusCode == expectedStatusCode {
-			return outputURLs, nil
+	if resp.StatusCode == 200 {
+		err = json.NewDecoder(resp.Body).Decode(&outputURLs)
+		if err != nil {
+			return URLs, err
 		}
+	} else if resp.StatusCode != 200 {
+		return URLs, errors.New("unexpected status code: " + resp.Status)
 	}
 
 	return outputURLs, err
