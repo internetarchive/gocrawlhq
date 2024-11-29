@@ -13,7 +13,7 @@ func (c *Client) Get(size int, strategy string) (URLs []URL, err error) {
 	emptyStatusCode := 204
 
 	// build request
-	req, err := http.NewRequest("GET", c.URLsEndpoint.String(), nil)
+	req, err := http.NewRequest(http.MethodGet, c.URLsEndpoint.String(), nil)
 	if err != nil {
 		return URLs, err
 	}

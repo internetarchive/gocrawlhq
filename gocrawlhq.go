@@ -57,9 +57,15 @@ func Init(key, secret, project, address, identifier string) (c *Client, err erro
 		return c, err
 	}
 
+	c.ProjectEndpoint, err = url.Parse(c.HQAddress)
+	if err != nil {
+		return c, err
+	}
+
 	c.URLsEndpoint.Path = path.Join(c.URLsEndpoint.Path, "api", "projects", c.Project, "urls")
 	c.SeencheckEndpoint.Path = path.Join(c.SeencheckEndpoint.Path, "api", "projects", c.Project, "seencheck")
 	c.ResetEndpoint.Path = path.Join(c.ResetEndpoint.Path, "api", "projects", c.Project, "reset")
+	c.ProjectEndpoint.Path = path.Join(c.ProjectEndpoint.Path, "api", "projects", c.Project)
 
 	return c, nil
 }

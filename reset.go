@@ -8,7 +8,7 @@ import (
 func (c *Client) Reset() (err error) {
 	expectedStatusCode := 202
 
-	req, err := http.NewRequest("POST", c.ResetEndpoint.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, c.ResetEndpoint.String(), nil)
 	if err != nil {
 		return err
 	}

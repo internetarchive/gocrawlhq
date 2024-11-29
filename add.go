@@ -26,7 +26,7 @@ func (c *Client) Add(URLs []URL, bypassSeencheck bool) (err error) {
 	}
 
 	// build request
-	req, err := http.NewRequest("POST", c.URLsEndpoint.String(), bytes.NewReader(jsonPayload))
+	req, err := http.NewRequest(http.MethodPost, c.URLsEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return err
 	}

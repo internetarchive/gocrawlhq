@@ -13,7 +13,7 @@ func (c *Client) Seencheck(URLs []URL) (outputURLs []URL, err error) {
 		return URLs, err
 	}
 
-	req, err := http.NewRequest("POST", c.SeencheckEndpoint.String(), bytes.NewReader(jsonPayload))
+	req, err := http.NewRequest(http.MethodPost, c.SeencheckEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return URLs, err
 	}

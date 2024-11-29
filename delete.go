@@ -22,7 +22,7 @@ func (c *Client) Delete(URLs []URL, localCrawls int) (err error) {
 	}
 
 	// build request
-	req, err := http.NewRequest("DELETE", c.URLsEndpoint.String(), bytes.NewReader(jsonPayload))
+	req, err := http.NewRequest(http.MethodDelete, c.URLsEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return err
 	}
