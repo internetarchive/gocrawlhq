@@ -12,9 +12,10 @@ type Project struct {
 	SeencheckEnabled bool     `json:"seencheck_enabled"`
 	SeencheckTTL     int      `json:"seencheck_ttl"`
 	Stats            struct {
-		Pending    int `json:"pending"`
-		Processing int `json:"processing"`
-		Completed  int `json:"completed"`
+		Pending         int `json:"pending"`
+		Processing      int `json:"processing"`
+		CompletedSeeds  int `json:"completed_seeds"`
+		CompletedAssets int `json:"completed_assets"`
 	} `json:"stats"`
 }
 
