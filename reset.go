@@ -1,14 +1,15 @@
 package gocrawlhq
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 )
 
-func (c *Client) Reset() (err error) {
+func (c *Client) Reset(ctx context.Context) (err error) {
 	expectedStatusCode := 202
 
-	req, err := http.NewRequest(http.MethodPost, c.ResetEndpoint.String(), nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.ResetEndpoint.String(), nil)
 	if err != nil {
 		return err
 	}
@@ -34,10 +35,10 @@ func (c *Client) Reset() (err error) {
 	return nil
 }
 
-func (c *Client) ResetURL(ID string) (err error) {
+func (c *Client) ResetURL(ctx context.Context, ID string) (err error) {
 	expectedStatusCode := 200
 
-	req, err := http.NewRequest(http.MethodPost, c.ResetEndpoint.String()+"/"+ID, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.ResetEndpoint.String()+"/"+ID, nil)
 	if err != nil {
 		return err
 	}

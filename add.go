@@ -2,12 +2,13 @@ package gocrawlhq
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
-func (c *Client) Add(URLs []URL, bypassSeencheck bool) (err error) {
+func (c *Client) Add(ctx context.Context, URLs []URL, bypassSeencheck bool) (err error) {
 	expectedStatusCode := 201
 
 	// build payload
@@ -26,7 +27,7 @@ func (c *Client) Add(URLs []URL, bypassSeencheck bool) (err error) {
 	}
 
 	// build request
-	req, err := http.NewRequest(http.MethodPost, c.URLsEndpoint.String(), bytes.NewReader(jsonPayload))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.URLsEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return err
 	}

@@ -1,6 +1,7 @@
 package gocrawlhq
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 )
@@ -19,10 +20,10 @@ type Project struct {
 	} `json:"stats"`
 }
 
-func (c *Client) GetProject() (p *Project, err error) {
+func (c *Client) GetProject(ctx context.Context) (p *Project, err error) {
 	expectedStatusCodes := 200
 
-	req, err := http.NewRequest(http.MethodGet, c.ProjectEndpoint.String(), nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.ProjectEndpoint.String(), nil)
 	if err != nil {
 		return p, err
 	}

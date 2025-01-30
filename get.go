@@ -1,6 +1,7 @@
 package gocrawlhq
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -8,12 +9,12 @@ import (
 	"strconv"
 )
 
-func (c *Client) Get(size int, strategy string) (URLs []URL, err error) {
+func (c *Client) Get(ctx context.Context, size int, strategy string) (URLs []URL, err error) {
 	expectedStatusCode := 200
 	emptyStatusCode := 204
 
 	// build request
-	req, err := http.NewRequest(http.MethodGet, c.URLsEndpoint.String(), nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.URLsEndpoint.String(), nil)
 	if err != nil {
 		return URLs, err
 	}

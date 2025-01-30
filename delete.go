@@ -2,12 +2,13 @@ package gocrawlhq
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
-func (c *Client) Delete(URLs []URL, localCrawls int) (err error) {
+func (c *Client) Delete(ctx context.Context, URLs []URL, localCrawls int) (err error) {
 	expectedStatusCode := 204
 
 	// build payload
@@ -22,7 +23,7 @@ func (c *Client) Delete(URLs []URL, localCrawls int) (err error) {
 	}
 
 	// build request
-	req, err := http.NewRequest(http.MethodDelete, c.URLsEndpoint.String(), bytes.NewReader(jsonPayload))
+	req, err := http.NewRequestWithContext(ctx, http.MethodDelete, c.URLsEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return err
 	}

@@ -2,18 +2,19 @@ package gocrawlhq
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
 )
 
-func (c *Client) Seencheck(URLs []URL) (outputURLs []URL, err error) {
+func (c *Client) Seencheck(ctx context.Context, URLs []URL) (outputURLs []URL, err error) {
 	jsonPayload, err := json.Marshal(URLs)
 	if err != nil {
 		return URLs, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, c.SeencheckEndpoint.String(), bytes.NewReader(jsonPayload))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.SeencheckEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return URLs, err
 	}
