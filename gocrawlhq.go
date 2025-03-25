@@ -12,15 +12,19 @@ var (
 	Version = "1.2.15"
 )
 
-func Init(key, secret, project, address, identifier string) (c *Client, err error) {
+func Init(key, secret, project, address, identifier string, timeout int) (c *Client, err error) {
 	c = new(Client)
+
+	if timeout == 0 {
+		timeout = 5
+	}
 
 	c.Key = key
 	c.Secret = secret
 	c.Project = project
 	c.HQAddress = address
 	c.HTTPClient = &http.Client{
-		Timeout: time.Second * 5,
+		Timeout: time.Second * time.Duration(timeout),
 	}
 
 	if identifier == "" {
