@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-func (c *Client) Get(ctx context.Context, size int, strategy string) (URLs []URL, err error) {
+func (c *Client) Get(ctx context.Context, size int) (URLs []URL, err error) {
 	expectedStatusCode := 200
 	emptyStatusCode := 204
 
@@ -21,7 +21,6 @@ func (c *Client) Get(ctx context.Context, size int, strategy string) (URLs []URL
 
 	q := req.URL.Query()
 	q.Add("size", strconv.Itoa(size))
-	q.Add("strategy", strategy)
 	req.URL.RawQuery = q.Encode()
 
 	req.Header.Add("X-Auth-Key", c.Key)
