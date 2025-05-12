@@ -1,6 +1,8 @@
 package gocrawlhq
 
 import (
+	"context"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -72,4 +74,19 @@ func Init(key, secret, project, address, identifier string, timeout int) (c *Cli
 	c.ProjectEndpoint.Path = path.Join(c.ProjectEndpoint.Path, "api", "projects", c.Project)
 
 	return c, nil
+}
+
+func NewAPIRequest(c *Client, ctx context.Context, method string, url string, body io.Reader) (*http.Request, error) {
+	// Create base request
+	req, err := http.NewRequestWithContext(ctx, method, url, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Add("X-Auth-Key", c.Key)
+	req.Header.Add("X-Auth-Secret", c.Secret)
+	req.Header.Add("User-Agent", "gocrawlhq/"+Version)
+	if c.Identifier != "" {
+		req.Header.Add("X-Identifier", c.Identifier)
+	}
+	return req, nil
 }

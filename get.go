@@ -9,12 +9,14 @@ import (
 	"strconv"
 )
 
+var ErrFeedEmpty = errors.New("gocrawlhq: feed is empty")
+
 func (c *Client) Get(ctx context.Context, size int) (URLs []URL, err error) {
 	expectedStatusCode := 200
 	emptyStatusCode := 204
 
 	// build request
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.URLsEndpoint.String(), nil)
+	req, err := NewAPIRequest(c, ctx, http.MethodGet, c.URLsEndpoint.String(), nil)
 	if err != nil {
 		return URLs, err
 	}
@@ -22,14 +24,6 @@ func (c *Client) Get(ctx context.Context, size int) (URLs []URL, err error) {
 	q := req.URL.Query()
 	q.Add("size", strconv.Itoa(size))
 	req.URL.RawQuery = q.Encode()
-
-	req.Header.Add("X-Auth-Key", c.Key)
-	req.Header.Add("X-Auth-Secret", c.Secret)
-	req.Header.Add("User-Agent", "gocrawlhq/"+Version)
-
-	if c.Identifier != "" {
-		req.Header.Add("X-Identifier", c.Identifier)
-	}
 
 	// execute request
 	resp, err := c.HTTPClient.Do(req)
@@ -40,7 +34,7 @@ func (c *Client) Get(ctx context.Context, size int) (URLs []URL, err error) {
 
 	// check response status code for 'empty' or 204
 	if resp.StatusCode == emptyStatusCode {
-		return URLs, errors.New("gocrawlhq: feed is empty")
+		return URLs, ErrFeedEmpty
 	}
 
 	// check response status code for 200

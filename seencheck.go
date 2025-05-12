@@ -14,17 +14,9 @@ func (c *Client) Seencheck(ctx context.Context, URLs []URL) (outputURLs []URL, e
 		return URLs, err
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.SeencheckEndpoint.String(), bytes.NewReader(jsonPayload))
+	req, err := NewAPIRequest(c, ctx, http.MethodPost, c.SeencheckEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return URLs, err
-	}
-
-	req.Header.Add("X-Auth-Key", c.Key)
-	req.Header.Add("X-Auth-Secret", c.Secret)
-	req.Header.Add("User-Agent", "gocrawlhq/"+Version)
-
-	if c.Identifier != "" {
-		req.Header.Add("X-Identifier", c.Identifier)
 	}
 
 	resp, err := c.HTTPClient.Do(req)
