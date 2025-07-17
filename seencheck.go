@@ -33,12 +33,12 @@ func (c *Client) Seencheck(ctx context.Context, URLs []URL) (outputURLs []URL, e
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode == 200 {
+	if resp.StatusCode == http.StatusOK {
 		err = json.NewDecoder(resp.Body).Decode(&outputURLs)
 		if err != nil {
 			return URLs, err
 		}
-	} else if resp.StatusCode != 204 {
+	} else if resp.StatusCode != http.StatusNoContent {
 		return URLs, fmt.Errorf("%w: %d", ErrUnexpectedStatusCode, resp.StatusCode)
 	}
 
