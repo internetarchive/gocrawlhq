@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"errors"
+	"fmt"
 	"net/http"
 )
 
@@ -39,7 +39,7 @@ func (c *Client) Seencheck(ctx context.Context, URLs []URL) (outputURLs []URL, e
 			return URLs, err
 		}
 	} else if resp.StatusCode != 204 {
-		return URLs, errors.New("unexpected status code: " + resp.Status)
+		return URLs, fmt.Errorf("%w: %d", ErrUnexpectedStatusCode, resp.StatusCode)
 	}
 
 	return outputURLs, err

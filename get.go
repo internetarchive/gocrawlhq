@@ -10,10 +10,6 @@ import (
 )
 
 func (c *Client) Get(ctx context.Context, size int) (URLs []URL, err error) {
-	expectedStatusCode := 200
-	emptyStatusCode := 204
-
-	// build request
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.URLsEndpoint.String(), nil)
 	if err != nil {
 		return URLs, err
@@ -39,13 +35,13 @@ func (c *Client) Get(ctx context.Context, size int) (URLs []URL, err error) {
 	defer resp.Body.Close()
 
 	// check response status code for 'empty' or 204
-	if resp.StatusCode == emptyStatusCode {
+	if resp.StatusCode == http.StatusNoContent {
 		return URLs, errors.New("gocrawlhq: feed is empty")
 	}
 
 	// check response status code for 200
-	if resp.StatusCode != expectedStatusCode {
-		return URLs, fmt.Errorf("non-%d status code: %d", expectedStatusCode, resp.StatusCode)
+	if resp.StatusCode != http.StatusOK {
+		return URLs, fmt.Errorf("%w: %d", ErrUnexpectedStatusCode, resp.StatusCode)
 	}
 
 	// decode response body
