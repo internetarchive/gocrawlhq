@@ -3,7 +3,6 @@ package gocrawlhq
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -36,7 +35,7 @@ func (c *Client) Get(ctx context.Context, size int) (URLs []URL, err error) {
 
 	// check response status code for 'empty' or 204
 	if resp.StatusCode == http.StatusNoContent {
-		return URLs, errors.New("gocrawlhq: feed is empty")
+		return URLs, nil
 	}
 
 	// check response status code for 200
