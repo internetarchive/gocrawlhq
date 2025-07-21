@@ -9,8 +9,6 @@ import (
 )
 
 func (c *Client) Delete(ctx context.Context, URLs []URL, localCrawls int) (err error) {
-	expectedStatusCode := 204
-
 	// build payload
 	payload := DeletePayload{
 		LocalCrawls: localCrawls,
@@ -36,8 +34,8 @@ func (c *Client) Delete(ctx context.Context, URLs []URL, localCrawls int) (err e
 	defer resp.Body.Close()
 
 	// check response status code
-	if resp.StatusCode != expectedStatusCode {
-		return fmt.Errorf("non-%d status code: %d", expectedStatusCode, resp.StatusCode)
+	if resp.StatusCode != http.StatusNoContent {
+		return fmt.Errorf("%w: %d", ErrUnexpectedStatusCode, resp.StatusCode)
 	}
 
 	return err
