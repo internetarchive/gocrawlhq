@@ -3,6 +3,7 @@ package gocrawlhq
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
