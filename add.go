@@ -25,17 +25,9 @@ func (c *Client) Add(ctx context.Context, URLs []URL, bypassSeencheck bool) (err
 	}
 
 	// build request
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.URLsEndpoint.String(), bytes.NewReader(jsonPayload))
+	req, err := NewAPIRequest(c, ctx, http.MethodPost, c.URLsEndpoint.String(), bytes.NewReader(jsonPayload))
 	if err != nil {
 		return err
-	}
-
-	req.Header.Add("X-Auth-Key", c.Key)
-	req.Header.Add("X-Auth-Secret", c.Secret)
-	req.Header.Add("User-Agent", "gocrawlhq/"+Version)
-
-	if c.Identifier != "" {
-		req.Header.Add("X-Identifier", c.Identifier)
 	}
 
 	// execute request
