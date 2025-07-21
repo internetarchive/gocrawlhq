@@ -9,8 +9,6 @@ import (
 )
 
 func (c *Client) Add(ctx context.Context, URLs []URL, bypassSeencheck bool) (err error) {
-	expectedStatusCode := 201
-
 	// build payload
 	var URLsPayload []URL
 
@@ -48,8 +46,8 @@ func (c *Client) Add(ctx context.Context, URLs []URL, bypassSeencheck bool) (err
 	defer resp.Body.Close()
 
 	// check response status code
-	if resp.StatusCode != expectedStatusCode {
-		return fmt.Errorf("non-%d status code: %d", expectedStatusCode, resp.StatusCode)
+	if resp.StatusCode != http.StatusCreated {
+		return fmt.Errorf("%w: %d", ErrUnexpectedStatusCode, resp.StatusCode)
 	}
 
 	return err
