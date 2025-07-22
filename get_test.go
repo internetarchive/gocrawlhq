@@ -3,10 +3,10 @@ package gocrawlhq
 import (
 	"context"
 	"encoding/json"
-	"errors"
+	"fmt"
 	"net/http"
-	"net/url"
 	"net/http/httptest"
+	"net/url"
 	"strconv"
 	"testing"
 )
@@ -94,9 +94,12 @@ func TestClient_Get_Empty(t *testing.T) {
 		HTTPClient:   http.DefaultClient,
 	}
 
-	_, err = client.Get(context.Background(), 5)
-	if !errors.Is(err, ErrFeedEmpty) {
-		t.Errorf("Expected feed empty error, got: %v", err)
+	urls, err := client.Get(context.Background(), 5)
+	if err != nil {
+		t.Errorf("Expected no error, got: %v", err)
+	}
+	if len(urls) != 0 {
+		t.Errorf("Expected empty URLs, got: %v", urls)
 	}
 }
 
@@ -120,7 +123,7 @@ func TestClient_Get_Non200(t *testing.T) {
 	}
 
 	_, err = client.Get(context.Background(), 5)
-	if err == nil || err.Error() != "non-200 status code: 500" {
+	if err == nil || err.Error() != fmt.Errorf("%w: %d", ErrUnexpectedStatusCode, http.StatusInternalServerError).Error() {
 		t.Errorf("Expected status code error, got: %v", err)
 	}
 }
