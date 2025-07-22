@@ -3,13 +3,10 @@ package gocrawlhq
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 )
-
-var ErrFeedEmpty = errors.New("gocrawlhq: feed is empty")
 
 func (c *Client) Get(ctx context.Context, size int) (URLs []URL, err error) {
 	// build request
