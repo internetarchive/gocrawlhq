@@ -10,13 +10,9 @@ import (
 
 func (c *Client) Add(ctx context.Context, URLs []URL, bypassSeencheck bool) (err error) {
 	// build payload
-	var URLsPayload []URL
-
-	URLsPayload = append(URLsPayload, URLs...)
-
 	payload := AddPayload{
 		BypassSeencheck: bypassSeencheck,
-		URLs:            URLsPayload,
+		URLs:            URLs,
 	}
 
 	jsonPayload, err := json.Marshal(payload)
