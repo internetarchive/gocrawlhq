@@ -14,7 +14,7 @@ var (
 	Version = "1.2.15"
 )
 
-func Init(key, secret, project, address, identifier string, timeout int) (c *Client, err error) {
+func Init(key, secret, project, address, identifier string, timeout int, gzipRequests bool) (c *Client, err error) {
 	c = new(Client)
 
 	if timeout == 0 {
@@ -25,8 +25,19 @@ func Init(key, secret, project, address, identifier string, timeout int) (c *Cli
 	c.Secret = secret
 	c.Project = project
 	c.HQAddress = address
+
+	baseTransport := &http.Transport{
+		DisableCompression: false,
+	}
+
+	var transport http.RoundTripper = baseTransport
+	if gzipRequests {
+		transport = &gzipTransport{next: baseTransport}
+	}
+
 	c.HTTPClient = &http.Client{
-		Timeout: time.Second * time.Duration(timeout),
+		Timeout:   time.Second * time.Duration(timeout),
+		Transport: transport,
 	}
 
 	if identifier == "" {
