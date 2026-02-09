@@ -14,7 +14,12 @@ func (c *Client) Seencheck(ctx context.Context, URLs []URL) (outputURLs []URL, e
 		return URLs, err
 	}
 
-	req, err := NewAPIRequest(c, ctx, http.MethodPost, c.SeencheckEndpoint.String(), bytes.NewReader(jsonPayload))
+	endpoint := c.SeencheckEndpoint.String()
+	if c.AltSeencheckURL != "" {
+		endpoint = c.AltSeencheckURL
+	}
+
+	req, err := NewAPIRequest(c, ctx, http.MethodPost, endpoint, bytes.NewReader(jsonPayload))
 	if err != nil {
 		return URLs, err
 	}

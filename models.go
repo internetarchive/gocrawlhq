@@ -14,6 +14,7 @@ type Client struct {
 	Identifier        string
 	URLsEndpoint      *url.URL
 	SeencheckEndpoint *url.URL
+	AltSeencheckURL   string
 	ResetEndpoint     *url.URL
 	ProjectEndpoint   *url.URL
 	HTTPClient        *http.Client
